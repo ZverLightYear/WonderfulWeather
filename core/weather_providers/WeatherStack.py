@@ -21,6 +21,10 @@ class WeatherStack(WeatherProvider):
         self.__url = config["url"]
 
     def _weather_translator(self, weather: dict) -> Weather:
+        """
+        Приведение ответа WeatherStack к единному формату для хранения погоды.
+        :param dict weather: Ответ от WeatherStack.
+        """
         formated_weather = \
             {
                 "temp": float(weather["current"]["temperature"]),

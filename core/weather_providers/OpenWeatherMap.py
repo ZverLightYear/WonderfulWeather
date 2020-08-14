@@ -21,6 +21,10 @@ class OpenWeatherMap(WeatherProvider):
         self.__url = config["url"]
 
     def _weather_translator(self, weather: dict) -> Weather:
+        """
+        Приведение ответа OpenWeatherMap к единному формату для хранения погоды.
+        :param dict weather: Ответ от OpenWeatherMap.
+        """
         formated_weather = \
             {
                 "temp": weather["main"]["temp"],
