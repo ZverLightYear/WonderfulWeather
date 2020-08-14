@@ -1,4 +1,4 @@
-import requests
+from requests import get
 
 from core.weather import Weather
 from core.weather_provider import WeatherProvider
@@ -20,6 +20,30 @@ class OpenWeatherMap(WeatherProvider):
         self.__api_key = config["api_key"]
         self.__url = config["url"]
 
+    def _weather_translator(self, weather: dict) -> Weather:
+        formated_weather = \
+            {
+                "temp": weather["main"]["temp"],
+                "feels_like": weather["main"]["feels_like"],
+                "pressure": weather["main"]["pressure"],
+                "humidity": weather["main"]["humidity"],
+                "visibility": weather["visibility"],
+                "cloudcover": weather["clouds"]["all"],
+
+                "location": {
+                    "name": weather["name"],
+                    "coord": {
+                        "lon": weather["coord"]["lon"],
+                        "lat": weather["coord"]["lat"]
+                    }
+                },
+                "wind": {
+                    "speed": weather["wind"]["speed"],
+                    "deg": weather["wind"]["deg"]
+                }
+            }
+        return Weather(formated_weather)
+
     def get_weather_for_city(self, city) -> Weather:
         """
         Получение погоды по заданному городу.
@@ -32,6 +56,6 @@ class OpenWeatherMap(WeatherProvider):
         req_url = self.__url.format(city, self.__api_key)
 
         # ToDo: обработка результатов запроса (если не 200, то выдумывать)
-        response = requests.request("GET", req_url)
+        weather_response = get(req_url).json()
 
-        return Weather(response.json())
+        return self._weather_translator(weather_response)

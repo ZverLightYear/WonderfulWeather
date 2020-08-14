@@ -1,4 +1,4 @@
-import requests
+from requests import get
 
 from core.weather import Weather
 from core.weather_provider import WeatherProvider
@@ -20,6 +20,30 @@ class WeatherStack(WeatherProvider):
         self.__api_key = config["api_key"]
         self.__url = config["url"]
 
+    def _weather_translator(self, weather: dict) -> Weather:
+        formated_weather = \
+            {
+                "temp": float(weather["current"]["temperature"]),
+                "feels_like": float(weather["current"]["feelslike"]),
+                "pressure": weather["current"]["pressure"],
+                "humidity": weather["current"]["humidity"],
+                "visibility": weather["current"]["visibility"]*1000,
+                "cloudcover": weather["current"]["cloudcover"],
+
+                "location": {
+                    "name": weather["location"]["name"],
+                    "coord": {
+                        "lon": float(weather["location"]["lon"]),
+                        "lat": float(weather["location"]["lat"])
+                    }
+                },
+                "wind": {
+                    "speed": weather["current"]["wind_speed"],
+                    "deg": weather["current"]["wind_degree"]
+                }
+            }
+        return Weather(formated_weather)
+
     def get_weather_for_city(self, city) -> Weather:
         """
         Получение погоды по заданному городу.
@@ -32,6 +56,6 @@ class WeatherStack(WeatherProvider):
         req_url = self.__url.format(city, self.__api_key)
 
         # ToDo: обработка результатов запроса (если не 200, то выдумывать)
-        response = requests.request("GET", req_url)
+        weather_response = get(req_url).json()
 
-        return Weather(response.json())
+        return self._weather_translator(weather_response)
