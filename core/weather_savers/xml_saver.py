@@ -13,4 +13,4 @@ class XmlWeatherSaver(WeatherSaver):
         # ToDo: порядок сохранения полей
         with open(file_name, "w") as out:
             # Перед записью преобразуем данные из JSON в XML
-            out.write(Json2xml(weather.__repr__()).to_xml())
+            out.write(Json2xml(weather.get()).to_xml())

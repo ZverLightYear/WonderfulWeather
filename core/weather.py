@@ -1,4 +1,5 @@
 import json
+from collections import OrderedDict
 
 
 class Weather:
@@ -7,11 +8,11 @@ class Weather:
     Предполагается изначальное хранение погоды в JSON формате.
     """
 
-    __weather: dict = None
+    __weather: OrderedDict = None
 
-    def __init__(self, weather: dict):
+    def __init__(self, weather: OrderedDict):
         """
-        :param dict weather: Показатели погоды.
+        :param OrderedDict weather: Показатели погоды.
         """
         self.__weather = weather
 
@@ -21,7 +22,7 @@ class Weather:
         """
         return json.dumps(self.__weather, indent=4)
 
-    def __repr__(self):
+    def get(self):
         """
         :return: Представление погоды в формате JSON
         """

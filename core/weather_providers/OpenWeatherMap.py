@@ -1,4 +1,5 @@
 from requests import get
+from collections import OrderedDict
 
 from core.weather import Weather
 from core.weather_provider import WeatherProvider
@@ -20,32 +21,31 @@ class OpenWeatherMap(WeatherProvider):
         self.__api_key = config["api_key"]
         self.__url = config["url"]
 
-    def _weather_translator(self, weather: dict) -> Weather:
+    def _weather_translator(self, weather: OrderedDict) -> Weather:
         """
         Приведение ответа OpenWeatherMap к единному формату для хранения погоды.
-        :param dict weather: Ответ от OpenWeatherMap.
+        :param OrderedDict weather: Ответ от OpenWeatherMap.
         """
-        formated_weather = \
-            {
-                "temp": weather["main"]["temp"],
-                "feels_like": weather["main"]["feels_like"],
-                "pressure": weather["main"]["pressure"],
-                "humidity": weather["main"]["humidity"],
-                "visibility": weather["visibility"],
-                "cloudcover": weather["clouds"]["all"],
+        formated_weather = OrderedDict(
+                temp=weather["main"]["temp"],
+                feels_like=weather["main"]["feels_like"],
+                pressure=weather["main"]["pressure"],
+                humidity=weather["main"]["humidity"],
+                visibility=weather["visibility"],
+                cloudcover=weather["clouds"]["all"],
 
-                "location": {
-                    "name": weather["name"],
-                    "coord": {
-                        "lon": weather["coord"]["lon"],
-                        "lat": weather["coord"]["lat"]
-                    }
-                },
-                "wind": {
-                    "speed": weather["wind"]["speed"],
-                    "deg": weather["wind"]["deg"]
-                }
-            }
+                location=OrderedDict(
+                    name=weather["name"],
+                    coord=OrderedDict(
+                        lon=weather["coord"]["lon"],
+                        lat=weather["coord"]["lat"]
+                    )
+                ),
+                wind=OrderedDict(
+                    speed=weather["wind"]["speed"],
+                    deg=weather["wind"]["deg"]
+                )
+            )
         return Weather(formated_weather)
 
     def get_weather_for_city(self, city) -> Weather:
