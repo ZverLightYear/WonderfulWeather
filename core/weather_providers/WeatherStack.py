@@ -4,10 +4,10 @@ from core.weather import Weather
 from core.weather_provider import WeatherProvider
 
 
-class OpenWeatherMap(WeatherProvider):
+class WeatherStack(WeatherProvider):
     """
     Реализация погодного провайдера.
-    https://openweathermap.org/
+    https://weatherstack.com/
     """
 
     def __init__(self, config):
@@ -28,7 +28,7 @@ class OpenWeatherMap(WeatherProvider):
         """
 
         # Формируем запрос
-        # Формат запроса: http://api.openweathermap.org/data/2.5/weather?q={}&appid={}
+        # Формат запроса: "http://api.weatherstack.com/current?query={}&access_key={}&units=m"
         req_url = self.__url.format(city, self.__api_key)
 
         # ToDo: обработка результатов запроса (если не 200, то выдумывать)

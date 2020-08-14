@@ -3,6 +3,7 @@ import datetime
 
 from core.weather_provider import WeatherProvider
 from core.weather_providers.OpenWeatherMap import OpenWeatherMap
+from core.weather_providers.WeatherStack import WeatherStack
 
 from core.weather_saver import WeatherSaver
 from core.weather_savers.json_saver import JsonWeatherSaver
@@ -19,11 +20,11 @@ if __name__ == '__main__':
     # ToDo: parse args:
     # [-p provider] [-k appid]? city [-f format_to_save]
 
+    city = "Moscow"
+
     # Тестовый прогон запроса погоды через API OpenWeatherMap
     # Создаем и инициализируем провайдер OpenWeatherMap
     provider: WeatherProvider = OpenWeatherMap(providers_init["OpenWeatherMap"])
-
-    city = "Moscow"
 
     # Запрашиваем информацию о погоде в Москве
     weather = provider.get_weather_for_city(city)
@@ -42,3 +43,11 @@ if __name__ == '__main__':
     saver: WeatherSaver = XmlWeatherSaver()
     # Сохраняем результат
     saver.save(weather, f"output/{out_file_name}.xml")
+
+    # Тестовый прогон запроса погоды через API WeatherStack
+    provider: WeatherProvider = WeatherStack(providers_init["WeatherStack"])
+    # Запрашиваем информацию о погоде в Москве
+    weather = provider.get_weather_for_city(city)
+
+    print(weather)
+

@@ -3,6 +3,10 @@
     "OpenWeatherMap": {
       "url": "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}",
       "api_key": "6d28a5b2f17fbc0521aa16d2d20e59f3"
+    },
+    "WeatherStack": {
+      "url": "http://api.weatherstack.com/current?query={}&access_key={}&units=m",
+      "api_key": "83d9a2d5ba08bf84a54962289dc40033"
     }
   }
 }
