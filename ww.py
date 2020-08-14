@@ -16,6 +16,7 @@ if __name__ == '__main__':
 
     # В конфигурационном файле содержится информация для инициализации погодных провайдеров
     providers_init = config["providers"]
+    savers_init = config["savers"]
 
     # ToDo: parse args:
     # [-p provider] [-k appid]? city [-f format_to_save]
@@ -35,12 +36,12 @@ if __name__ == '__main__':
 
     # Тестовый прогон сохранения погоды через оба сейвера(JSON & XML)
     # Создаем и инициализируем сэйвер JsonWeatherSaver
-    saver: WeatherSaver = JsonWeatherSaver()
+    saver: WeatherSaver = JsonWeatherSaver(savers_init["json_format"])
     # Сохраняем результат
     saver.save(weather, f"output/{out_file_name}.json")
 
     # Создаем и инициализируем сэйвер XmlWeatherSaver
-    saver: WeatherSaver = XmlWeatherSaver()
+    saver: WeatherSaver = XmlWeatherSaver(savers_init["xml_format"])
     # Сохраняем результат
     saver.save(weather, f"output/{out_file_name}.xml")
 

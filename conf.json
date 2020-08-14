@@ -8,5 +8,9 @@
       "url": "http://api.weatherstack.com/current?query={}&access_key={}&units=m",
       "api_key": "83d9a2d5ba08bf84a54962289dc40033"
     }
+  },
+  "savers": {
+    "json_format": ["date", "temp", "wind_deg"],
+    "xml_format": ["date", "wind_speed", "temp"]
   }
 }

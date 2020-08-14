@@ -1,11 +1,13 @@
 import json
 from collections import OrderedDict
 
+from copy import copy
+
 
 class Weather:
     """
     Контейнер для хранения ответов от погодных провайдеров.
-    Предполагается изначальное хранение погоды в JSON формате.
+    Предполагается изначальное хранение погоды в OrderedDict (JSON) формате.
     """
 
     __weather: OrderedDict = None
@@ -18,12 +20,12 @@ class Weather:
 
     def __str__(self):
         """
-        :return: Читабельное представление погоды
+        :return: Читабельное представление погоды.
         """
         return json.dumps(self.__weather, indent=4)
 
     def get(self):
         """
-        :return: Представление погоды в формате JSON
+        :return: Представление погоды.
         """
-        return self.__weather
+        return copy(self.__weather)
