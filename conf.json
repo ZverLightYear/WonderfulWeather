@@ -1,0 +1,8 @@
+{
+  "providers": {
+    "OpenWeatherMap": {
+      "url": "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}",
+      "api_key": "6d28a5b2f17fbc0521aa16d2d20e59f3"
+    }
+  }
+}
