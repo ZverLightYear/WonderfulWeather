@@ -27,6 +27,7 @@ class WeatherStack(WeatherProvider):
         :param OrderedDict weather: Ответ от WeatherStack.
         """
         formated_weather = OrderedDict(
+                date=weather["location"]["localtime_epoch"],
                 temp=float(weather["current"]["temperature"]),
                 feels_like=float(weather["current"]["feelslike"]),
                 pressure=weather["current"]["pressure"],

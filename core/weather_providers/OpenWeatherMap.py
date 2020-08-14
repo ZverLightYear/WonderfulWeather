@@ -27,6 +27,7 @@ class OpenWeatherMap(WeatherProvider):
         :param OrderedDict weather: Ответ от OpenWeatherMap.
         """
         formated_weather = OrderedDict(
+                date=weather["dt"],
                 temp=weather["main"]["temp"],
                 feels_like=weather["main"]["feels_like"],
                 pressure=weather["main"]["pressure"],
