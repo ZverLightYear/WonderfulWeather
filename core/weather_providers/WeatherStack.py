@@ -35,17 +35,12 @@ class WeatherStack(WeatherProvider):
                 visibility=weather["current"]["visibility"] * 1000,
                 cloudcover=weather["current"]["cloudcover"],
 
-                location=OrderedDict(
-                    name=weather["location"]["name"],
-                    coord=OrderedDict(
-                        lon=float(weather["location"]["lon"]),
-                        lat=float(weather["location"]["lat"])
-                    )
-                ),
-                wind=OrderedDict(
-                    speed=weather["current"]["wind_speed"],
-                    deg=weather["current"]["wind_degree"]
-                )
+                location_name=weather["location"]["name"],
+                location_lon=float(weather["location"]["lon"]),
+                location_lat=float(weather["location"]["lat"]),
+
+                wind_speed=weather["current"]["wind_speed"],
+                wind_deg=weather["current"]["wind_degree"]
             )
         return Weather(formated_weather)
 

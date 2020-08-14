@@ -35,17 +35,12 @@ class OpenWeatherMap(WeatherProvider):
                 visibility=weather["visibility"],
                 cloudcover=weather["clouds"]["all"],
 
-                location=OrderedDict(
-                    name=weather["name"],
-                    coord=OrderedDict(
-                        lon=weather["coord"]["lon"],
-                        lat=weather["coord"]["lat"]
-                    )
-                ),
-                wind=OrderedDict(
-                    speed=weather["wind"]["speed"],
-                    deg=weather["wind"]["deg"]
-                )
+                location_name=weather["name"],
+                location_lon=weather["coord"]["lon"],
+                location_lat=weather["coord"]["lat"],
+
+                wind_speed=weather["wind"]["speed"],
+                wind_deg=weather["wind"]["deg"]
             )
         return Weather(formated_weather)
 
@@ -57,7 +52,7 @@ class OpenWeatherMap(WeatherProvider):
         """
 
         # Формируем запрос
-        # Формат запроса: http://api.openweathermap.org/data/2.5/weather?q={}&appid={}
+        # Формат запроса: http://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric
         req_url = self.__url.format(city, self.__api_key)
 
         # ToDo: обработка результатов запроса (если не 200, то выдумывать)
