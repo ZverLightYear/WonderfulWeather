@@ -26,5 +26,6 @@ class WeatherSaverManager:
         :param str saver_type: тип используемого сэйвера.
         """
         saver: WeatherSaver = self._savers[saver_type]()
-        return saver.save(weather, file_path)
+        if weather:
+            return saver.save(weather, file_path)
 

@@ -38,12 +38,13 @@ if __name__ == '__main__':
     # Парсим и извлекаем аргументы
     args = parse_args()
     provider_type, saver_type, city = args.p, args.f, args.city
+    # provider_type, saver_type, city = "OpenWeatherMap", "xml", "Moscow"
 
     # генерируем имя выходного файла для сохранения
     now = datetime.datetime.now()
     out_file_name = f'output/{city}_{provider_type}_{now.strftime("%d-%m-%Y_%H-%M-%S")}.{saver_type}'
-    if args.o:
-        out_file_name = args.o
+    # if args.o:
+    #     out_file_name = args.o
 
     # Тестовый прогон запроса погоды по параметрам
     provider_manager = WeatherProviderManager(providers_init)
