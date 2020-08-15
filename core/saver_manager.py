@@ -15,8 +15,8 @@ class WeatherSaverManager:
         Инициализация менеджэра погодных сэйверов.
         :param dict config: Конфигурация погодных сэйверов.
         """
-        self._savers = {"json": lambda: JsonWeatherSaver(config["json_format"]),
-                        "xml": lambda: XmlWeatherSaver(config["xml_format"])}
+        self._savers = {"json": lambda: JsonWeatherSaver(config["json"]["json_format"]),
+                        "xml": lambda: XmlWeatherSaver(config["xml"]["xml_format"])}
 
     def save(self, weather: Weather, file_path, saver_type) -> Weather:
         """
