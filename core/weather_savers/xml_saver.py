@@ -25,6 +25,7 @@ class XmlWeatherSaver(WeatherSaver):
         res: OrderedDict = weather.get()
 
         for key in self.__format:
+            # для каждого указанного ключа - перемещаем его на верх словаря
             res.move_to_end(key, False)
 
         return Weather(res)
@@ -36,6 +37,7 @@ class XmlWeatherSaver(WeatherSaver):
         :param str file_name: Путь сохранения файла.
         """
         formated_weather = self._format_weather(weather)
+
         with open(file_name, "w") as out:
             # Перед записью преобразуем данные из JSON в XML
             out.write(Json2xml(formated_weather.get()).to_xml())
