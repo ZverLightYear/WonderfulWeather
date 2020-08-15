@@ -56,14 +56,14 @@ class OpenWeatherMap(WeatherProvider):
         req_url = self.__url.format(city, self.__api_key)
 
         try:
-            weather_response = get(req_url)
+            weather_response = get(req_url).json()
 
-            if weather_response.status_code == 404:
-                raise ValueError("Запрашиваемый Вами городород не найден.")
-            if weather_response.status_code == 401:
-                raise ValueError("Проблемы с авторизацией. Проверьте правильность api_key для OpenWeatherMap.")
+            if weather_response["cod"] != 200:
+                raise ValueError(f"OpenWeatherMap: "
+                                 f"errno [{weather_response['cod']}]: "
+                                 f"{weather_response['message']}")
         except ValueError as e:
             print(e)
             return None
 
-        return self._weather_translator(weather_response.json())
+        return self._weather_translator(weather_response)

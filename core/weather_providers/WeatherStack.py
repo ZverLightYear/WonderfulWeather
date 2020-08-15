@@ -56,14 +56,14 @@ class WeatherStack(WeatherProvider):
         req_url = self.__url.format(city, self.__api_key)
 
         try:
-            weather_response = get(req_url)
+            weather_response = get(req_url).json()
 
-            if weather_response.status_code == 404:
-                raise ValueError("Запрашиваемый Вами городород не найден.")
-            if weather_response.status_code == 401:
-                raise ValueError("Проблемы с авторизацией. Проверьте правильность api_key для OpenWeatherMap.")
+            if "success" in weather_response:
+                raise ValueError(f"WeatherStack: "
+                                 f"{weather_response['error']['type']} [{weather_response['error']['code']}]: "
+                                 f"{weather_response['error']['info']}")
         except ValueError as e:
             print(e)
             return None
 
-        return self._weather_translator(weather_response.json())
+        return self._weather_translator(weather_response)
