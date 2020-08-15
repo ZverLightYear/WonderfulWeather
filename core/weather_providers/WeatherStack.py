@@ -55,7 +55,15 @@ class WeatherStack(WeatherProvider):
         # Формат запроса: "http://api.weatherstack.com/current?query={}&access_key={}&units=m"
         req_url = self.__url.format(city, self.__api_key)
 
-        # ToDo: обработка результатов запроса (если не 200, то выдумывать)
-        weather_response = get(req_url).json()
+        try:
+            weather_response = get(req_url)
 
-        return self._weather_translator(weather_response)
+            if weather_response.status_code == 404:
+                raise ValueError("Запрашиваемый Вами городород не найден.")
+            if weather_response.status_code == 401:
+                raise ValueError("Проблемы с авторизацией. Проверьте правильность api_key для OpenWeatherMap.")
+        except ValueError as e:
+            print(e)
+            return None
+
+        return self._weather_translator(weather_response.json())
