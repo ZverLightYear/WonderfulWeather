@@ -58,6 +58,7 @@ class WeatherStack(WeatherProvider):
         try:
             weather_response = get(req_url).json()
 
+            # отлавливаем неудачные ответы, если таковые есть
             if "success" in weather_response:
                 raise ValueError(f"WeatherStack: "
                                  f"{weather_response['error']['type']} [{weather_response['error']['code']}]: "
