@@ -55,16 +55,12 @@ class WeatherStack(WeatherProvider):
         # Формат запроса: "http://api.weatherstack.com/current?query={}&access_key={}&units=m"
         req_url = self.__url.format(city, self.__api_key)
 
-        try:
-            weather_response = get(req_url).json()
+        weather_response = get(req_url).json()
 
-            # отлавливаем неудачные ответы, если таковые есть
-            if "success" in weather_response:
-                raise ValueError(f"WeatherStack: "
-                                 f"{weather_response['error']['type']} [{weather_response['error']['code']}]: "
-                                 f"{weather_response['error']['info']}")
-        except ValueError as e:
-            print(e)
-            return None
+        # отлавливаем неудачные ответы, если таковые есть
+        if "success" in weather_response:
+            raise ValueError(f"[WeatherStack]: ! ERROR: "
+                             f"{weather_response['error']['type']} [{weather_response['error']['code']}]: "
+                             f"{weather_response['error']['info']}")
 
         return self._weather_translator(weather_response)
