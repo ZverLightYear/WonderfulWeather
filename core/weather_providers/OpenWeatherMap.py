@@ -58,6 +58,7 @@ class OpenWeatherMap(WeatherProvider):
         try:
             weather_response = get(req_url).json()
 
+            # отлавливаем неудачные ответы, если таковые есть
             if weather_response["cod"] != 200:
                 raise ValueError(f"OpenWeatherMap: "
                                  f"errno [{weather_response['cod']}]: "
