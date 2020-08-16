@@ -40,11 +40,15 @@ if __name__ == '__main__':
     provider_type, saver_type, city = args.p, args.f, args.city
     # provider_type, saver_type, city = "WeatherStack", "xml", "Moscow"
 
-    # генерируем имя выходного файла для сохранения
-    now = datetime.datetime.now()
-    out_file_name = f'{working_directory}/output/{city}_{provider_type}_{now.strftime("%d-%m-%Y_%H-%M-%S")}.{saver_type}'
     if args.o:
         out_file_name = args.o
+    else:
+        # генерируем имя выходного файла для сохранения
+        out_dir = f'{working_directory}/output'
+        now = datetime.datetime.now()
+        if not os.path.exists(out_dir):
+            os.mkdir(out_dir)
+        out_file_name = f'{out_dir}/{city}_{provider_type}_{now.strftime("%d-%m-%Y_%H-%M-%S")}.{saver_type}'
 
     # Запрашиваем погоду
     wtf: WeatherToFile = WeatherToFile(config)
