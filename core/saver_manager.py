@@ -18,6 +18,7 @@ class WeatherSaverManager:
         self._savers = {"json": lambda: JsonWeatherSaver(config["json"]["json_order"]),
                         "xml": lambda: XmlWeatherSaver(config["xml"]["xml_order"])}
 
+
     def save(self, weather: Weather, file_path, saver_type) -> Weather:
         """
         Сохранение информации о погоде.
@@ -27,6 +28,7 @@ class WeatherSaverManager:
         """
         print(f"[Saver:{saver_type}]: Сохраняем информацию о погоде...")
         saver: WeatherSaver = self._savers[saver_type]()
+
         try:
             saver.save(weather, file_path)
         except BaseException as e:

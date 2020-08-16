@@ -27,21 +27,21 @@ class OpenWeatherMap(WeatherProvider):
         :param OrderedDict weather: Ответ от OpenWeatherMap.
         """
         formated_weather = OrderedDict(
-                date=weather["dt"],
-                temp=weather["main"]["temp"],
-                feels_like=weather["main"]["feels_like"],
-                pressure=weather["main"]["pressure"],
-                humidity=weather["main"]["humidity"],
-                visibility=weather["visibility"],
-                cloudcover=weather["clouds"]["all"],
+            date=weather["dt"],
+            temp=weather["main"]["temp"],
+            feels_like=weather["main"]["feels_like"],
+            pressure=weather["main"]["pressure"],
+            humidity=weather["main"]["humidity"],
+            visibility=weather["visibility"],
+            cloudcover=weather["clouds"]["all"],
 
-                location_name=weather["name"],
-                location_lon=weather["coord"]["lon"],
-                location_lat=weather["coord"]["lat"],
+            location_name=weather["name"],
+            location_lon=weather["coord"]["lon"],
+            location_lat=weather["coord"]["lat"],
 
-                wind_speed=weather["wind"]["speed"],
-                wind_deg=weather["wind"]["deg"]
-            )
+            wind_speed=weather["wind"]["speed"],
+            wind_deg=weather["wind"]["deg"]
+        )
         return Weather(formated_weather)
 
     def get_weather_for_city(self, city) -> Weather:
@@ -55,7 +55,15 @@ class OpenWeatherMap(WeatherProvider):
         # Формат запроса: http://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric
         req_url = self.__url.format(city, self.__api_key)
 
-        # ToDo: обработка результатов запроса (если не 200, то выдумывать)
-        weather_response = get(req_url).json()
+        try:
+            weather_response = get(req_url).json()
+
+            if weather_response["cod"] != 200:
+                raise ValueError(f"OpenWeatherMap: "
+                                 f"errno [{weather_response['cod']}]: "
+                                 f"{weather_response['message']}")
+        except ValueError as e:
+            print(e)
+            return None
 
         return self._weather_translator(weather_response)
