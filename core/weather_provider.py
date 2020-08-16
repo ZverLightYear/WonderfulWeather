@@ -4,7 +4,7 @@ from abc import abstractmethod, ABC
 from core.weather import *
 
 
-class WeatherProvider(ABC):
+class WeatherProviderInterface(ABC):
     """
     Интерфейс погодного провайдера.
     Объявляет операции, которые должны выполнять все реализации погодных провайдеров.

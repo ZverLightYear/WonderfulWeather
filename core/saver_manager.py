@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from core.weather_saver import Weather, WeatherSaver
-from core.weather_savers.json_saver import JsonWeatherSaver
-from core.weather_savers.xml_saver import XmlWeatherSaver
+from core.weather_saver import Weather, WeatherSaverInterface
+from core.weather_savers.json_saver import JsonWeatherSaverInterface
+from core.weather_savers.xml_saver import XmlWeatherSaverInterface
 
 
 class WeatherSaverManager:
@@ -15,8 +15,8 @@ class WeatherSaverManager:
         Инициализация менеджэра погодных сэйверов.
         :param dict config: Конфигурация погодных сэйверов.
         """
-        self._savers = {"json": lambda: JsonWeatherSaver(config["json"]["json_order"]),
-                        "xml": lambda: XmlWeatherSaver(config["xml"]["xml_order"])}
+        self._savers = {"json": lambda: JsonWeatherSaverInterface(config["json"]["json_order"]),
+                        "xml": lambda: XmlWeatherSaverInterface(config["xml"]["xml_order"])}
 
     def save(self, weather: Weather, file_path, saver_type) -> Weather:
         """
@@ -26,7 +26,7 @@ class WeatherSaverManager:
         :param str saver_type: тип используемого сэйвера.
         """
         print(f"[Saver:{saver_type}]: Сохраняем информацию о погоде...")
-        saver: WeatherSaver = self._savers[saver_type]()
+        saver: WeatherSaverInterface = self._savers[saver_type]()
         try:
             saver.save(weather, file_path)
         except BaseException as e:

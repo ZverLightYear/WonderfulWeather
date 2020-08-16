@@ -1,10 +1,10 @@
 from collections import OrderedDict
 
 from core.weather import Weather
-from core.weather_saver import WeatherSaver
+from core.weather_saver import WeatherSaverInterface
 
 
-class JsonWeatherSaver(WeatherSaver):
+class JsonWeatherSaverInterface(WeatherSaverInterface):
     """
     Реализация сэйвера данных о погоде в формате JSON.
     """

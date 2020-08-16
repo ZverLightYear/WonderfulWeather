@@ -2,10 +2,10 @@ from json2xml.json2xml import Json2xml
 from collections import OrderedDict
 
 from core.weather import Weather
-from core.weather_saver import WeatherSaver
+from core.weather_saver import WeatherSaverInterface
 
 
-class XmlWeatherSaver(WeatherSaver):
+class XmlWeatherSaverInterface(WeatherSaverInterface):
     """
     Реализация сэйвера данных о погоде в формате XML.
     """

@@ -52,4 +52,4 @@ if __name__ == '__main__':
 
     # Запрашиваем погоду
     wtf: WeatherToFile = WeatherToFile(config)
-    wtf.request(provider_type, saver_type, city, out_file_name)
+    wtf.get_weather_for_city_and_save(provider_type, saver_type, city, out_file_name)

@@ -2,10 +2,10 @@ from requests import get
 from collections import OrderedDict
 
 from core.weather import Weather
-from core.weather_provider import WeatherProvider
+from core.weather_provider import WeatherProviderInterface
 
 
-class WeatherStack(WeatherProvider):
+class WeatherStackInterface(WeatherProviderInterface):
     """
     Реализация погодного провайдера.
     https://weatherstack.com/

@@ -4,7 +4,7 @@ from abc import abstractmethod, ABC
 from core.weather import *
 
 
-class WeatherSaver(ABC):
+class WeatherSaverInterface(ABC):
     """
     Интерфейс сэйвера погоды.
     Объявляет операции, которые должны выполнять все реализации погодных сейверов.

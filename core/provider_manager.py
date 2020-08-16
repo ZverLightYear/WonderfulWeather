@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from core.weather_provider import WeatherProvider, Weather
-from core.weather_providers.OpenWeatherMap import OpenWeatherMap
-from core.weather_providers.WeatherStack import WeatherStack
+from core.weather_provider import WeatherProviderInterface, Weather
+from core.weather_providers.OpenWeatherMap import OpenWeatherMapInterface
+from core.weather_providers.WeatherStack import WeatherStackInterface
 
 
 class WeatherProviderManager:
@@ -15,8 +15,8 @@ class WeatherProviderManager:
         Инициализация менеджэра погодных провайдеров.
         :param dict config: Конфигурация погодных провайдеров.
         """
-        self._providers = {"OpenWeatherMap": lambda: OpenWeatherMap(config["OpenWeatherMap"]),
-                           "WeatherStack": lambda: WeatherStack(config["WeatherStack"])}
+        self._providers = {"OpenWeatherMap": lambda: OpenWeatherMapInterface(config["OpenWeatherMap"]),
+                           "WeatherStack": lambda: WeatherStackInterface(config["WeatherStack"])}
 
     def get_weather_for_city(self, provider_type, city) -> Weather:
         """
@@ -25,7 +25,7 @@ class WeatherProviderManager:
         :param str city: Город, для которого необходимо запросить погоду.
         """
         print(f"[{provider_type}]: Запрашиваем погоду для города '{city}'")
-        provider: WeatherProvider = self._providers[provider_type]()
+        provider: WeatherProviderInterface = self._providers[provider_type]()
         try:
             return provider.get_weather_for_city(city)
         except BaseException as e:

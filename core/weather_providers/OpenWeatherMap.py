@@ -2,10 +2,10 @@ from requests import get
 from collections import OrderedDict
 
 from core.weather import Weather
-from core.weather_provider import WeatherProvider
+from core.weather_provider import WeatherProviderInterface
 
 
-class OpenWeatherMap(WeatherProvider):
+class OpenWeatherMapInterface(WeatherProviderInterface):
     """
     Реализация погодного провайдера.
     https://openweathermap.org/

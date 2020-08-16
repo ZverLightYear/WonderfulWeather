@@ -51,13 +51,19 @@ class Weather:
         return out
 
     def __getitem__(self, key):
+        """
+        :return: Значение пораметра погоды по ключу.
+        """
         return self.__weather[key]
 
     def json(self):
+        """
+        :return Weather: Контейнер погоды.
+        """
         return json.dumps(self.__weather, indent=4)
 
     def get(self):
         """
-        :return Weather: Контейнер погоды.
+        :return Weather: Вернуть копию контейнера погоды.
         """
         return copy(self.__weather)
