@@ -15,20 +15,17 @@ class XmlWeatherSaver(WeatherSaver):
         Инициализация сэйвера данных.
         :param saver_format: Формат вывода данных о погоде.
         """
-        self.__format = reversed(saver_format)
+        self.__format = saver_format
 
     def _format_weather(self, weather: Weather):
         """
         Приведение информации о погоде к требуемому сэйвером формату.
         :param Weather weather: Информация о погоде, полученная от погодного провайдера.
         """
-        res: OrderedDict = weather.get()
-
-        for key in self.__format:
-            # для каждого указанного ключа - перемещаем его на верх словаря
-            res.move_to_end(key, False)
-
-        return Weather(res)
+        try:
+            return Weather(OrderedDict([(key, weather[key]) for key in self.__format]))
+        except KeyError as ke:
+            raise KeyError(f"Неизвестный элемент {ke}. Проверьте правильность полей в формате сохранения файла.")
 
     def save(self, weather: Weather, file_name: str):
         """
