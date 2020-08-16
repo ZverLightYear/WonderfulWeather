@@ -11,10 +11,10 @@
   },
   "savers": {
     "json": {
-      "json_format": ["date", "temp", "wind_deg"]
+      "json_order": ["date", "temp", "wind_deg"]
     },
     "xml": {
-      "xml_format":["date", "wind_speed", "temp"]
+      "xml_order":["date", "wind_speed", "temp"]
     }
   }
 }

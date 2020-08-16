@@ -24,6 +24,10 @@ class WeatherProviderManager:
         :param str provider_type: Используемый тип погодного провайдера.
         :param str city: Город, для которого необходимо запросить погоду.
         """
+        print(f"[{provider_type}]: Запрашиваем погоду для города '{city}'")
         provider: WeatherProvider = self._providers[provider_type]()
-        return provider.get_weather_for_city(city)
+        try:
+            return provider.get_weather_for_city(city)
+        except BaseException as e:
+            print(e)
 

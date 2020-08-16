@@ -63,4 +63,5 @@ class OpenWeatherMap(WeatherProvider):
                              f"errno [{weather_response['cod']}]: "
                              f"{weather_response['message']}")
 
+
         return self._weather_translator(weather_response)
