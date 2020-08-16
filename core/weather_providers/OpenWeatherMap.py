@@ -55,15 +55,12 @@ class OpenWeatherMap(WeatherProvider):
         # Формат запроса: http://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric
         req_url = self.__url.format(city, self.__api_key)
 
-        try:
-            weather_response = get(req_url).json()
+        weather_response = get(req_url).json()
 
-            if weather_response["cod"] != 200:
-                raise ValueError(f"OpenWeatherMap: "
-                                 f"errno [{weather_response['cod']}]: "
-                                 f"{weather_response['message']}")
-        except ValueError as e:
-            print(e)
-            return None
+        # отлавливаем неудачные ответы, если таковые есть
+        if weather_response["cod"] != 200:
+            raise ValueError(f"[OpenWeatherMap]: ! ERROR: "
+                             f"errno [{weather_response['cod']}]: "
+                             f"{weather_response['message']}")
 
         return self._weather_translator(weather_response)
